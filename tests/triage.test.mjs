@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { einordnen, pruefeEingabe, MAX_ZEICHEN } from '../triage.js';
+// TRIAGE_MODULE wählt die Version: Standard ist v1 im Root, z. B. TRIAGE_MODULE=../v2/triage.js
+const { einordnen, pruefeEingabe, MAX_ZEICHEN } = await import(process.env.TRIAGE_MODULE ?? '../triage.js');
 
 test('Leere und nur-Leerzeichen-Eingabe wird abgelehnt', () => {
   for (const eingabe of ['', '   ', '\n\t ']) {
