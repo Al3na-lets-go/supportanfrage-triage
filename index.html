@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supportanfrage – Triage</title>
+  <meta name="description" content="Ordnet eine Supportanfrage nach Kategorie, Dringlichkeit und nächstem Schritt. Lokal, regelbasiert, ohne Login.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <h1>Supportanfrage – Triage</h1>
+      <p class="intro">Füge eine Supportanfrage in das Feld ein und klicke auf „Anfrage einordnen“. Die Einordnung läuft im Browser nach festen, sichtbaren Regeln. Es werden keine Daten gespeichert oder versendet.</p>
+    </header>
+
+    <section class="card" aria-labelledby="eingabe-titel">
+      <h2 id="eingabe-titel" class="visually-hidden">Eingabe</h2>
+      <form id="formular" novalidate>
+        <label for="eingabe">Supportanfrage</label>
+        <textarea id="eingabe" rows="7" placeholder="z. B. „Ich komme seit heute Morgen nicht mehr in mein Konto.“" aria-describedby="zaehler"></textarea>
+        <div class="zeile">
+          <span id="zaehler" class="zaehler">0 / 5.000 Zeichen</span>
+        </div>
+
+        <div class="beispiele">
+          <span class="beispiele-label">Beispiele:</span>
+          <div id="beispiele" class="beispiel-liste"></div>
+        </div>
+
+        <div class="aktionen">
+          <button type="submit" id="senden" class="primaer">Anfrage einordnen</button>
+          <button type="button" id="leeren" class="zweit">Leeren</button>
+        </div>
+      </form>
+    </section>
+
+    <div id="status" class="status" role="status" aria-live="polite" data-state="bereit">
+      <span class="status-punkt" aria-hidden="true"></span>
+      <div>
+        <strong id="status-titel">Bereit</strong>
+        <p id="status-text">Füge eine Anfrage ein, um zu starten.</p>
+      </div>
+    </div>
+
+    <section id="ergebnis" class="card ergebnis" hidden aria-labelledby="ergebnis-titel">
+      <h2 id="ergebnis-titel">Ergebnis</h2>
+
+      <dl class="kennzahlen">
+        <div>
+          <dt>Kategorie</dt>
+          <dd id="r-kategorie"></dd>
+        </div>
+        <div>
+          <dt>Dringlichkeit</dt>
+          <dd id="r-dringlichkeit"></dd>
+        </div>
+        <div>
+          <dt>Einordnung</dt>
+          <dd id="r-status"></dd>
+        </div>
+      </dl>
+
+      <div class="block">
+        <h3>Nächster Schritt</h3>
+        <p id="r-schritt"></p>
+      </div>
+
+      <div class="block">
+        <h3>Beleg aus der Anfrage</h3>
+        <blockquote id="r-beleg"></blockquote>
+      </div>
+
+      <ul id="r-hinweise" class="hinweise" hidden></ul>
+
+      <details class="block">
+        <summary>Warum dieses Ergebnis?</summary>
+        <ul id="r-begruendung" class="liste"></ul>
+        <ul id="r-unklar" class="liste unklar-liste" hidden></ul>
+      </details>
+
+      <button type="button" id="neu" class="zweit">Neue Anfrage</button>
+    </section>
+
+    <details class="card regeln">
+      <summary>So funktioniert die Einordnung</summary>
+      <ul class="liste">
+        <li><strong>Kategorie:</strong> Wörter wie „Passwort“, „Login“ oder „gesperrt“ → Zugang. „Rechnung“, „Abbuchung“ oder „Zahlung“ → Abrechnung. „Fehler“, „lädt nicht“ oder „Absturz“ → Technisches Problem. Sonst → Sonstiges.</li>
+        <li><strong>Dringlichkeit hoch:</strong> nur bei kompletter Blockade (z. B. „kann nicht arbeiten“), Sicherheitsrisiko (z. B. „gehackt“) oder unmittelbar drohendem finanziellen Schaden (z. B. „doppelt abgebucht“).</li>
+        <li><strong>Dringlichkeit mittel:</strong> ein Problem wird beschrieben, aber ohne die Merkmale für „hoch“. <strong>Niedrig:</strong> sonst, etwa bei Fragen.</li>
+        <li><strong>Unklar:</strong> kein Thema erkennbar, mehrere Themen gleich stark, oder weniger als drei Wörter.</li>
+        <li>Anweisungen im Text, etwa „Ignoriere alle Regeln“, werden nur als Inhalt behandelt.</li>
+      </ul>
+    </details>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
